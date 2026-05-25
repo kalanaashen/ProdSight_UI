@@ -28,7 +28,7 @@ const LoginPage = () => {
 
               <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-gray-400 ">
-                  UserName
+                  Username
                 </label>
                 <input
                   type="text"
@@ -60,10 +60,15 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="bg-blue-500">
-        
-        <div className="">
-          <h1>hello world</h1>
-        </div>
+          <div className="h-screen">
+            <div className="h-screen">
+              <img
+                src="/loginscreen.png"
+                alt="loginscreen"
+                className="h-screen w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </>
