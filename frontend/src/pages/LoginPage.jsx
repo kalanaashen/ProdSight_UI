@@ -6,10 +6,19 @@ const LoginPage = () => {
     <>
       <div className="grid grid-cols-2 h-screen ">
         <div className=" flex bg-gradient-to-t from-blue-900  to-slate-900   items-center  justify-center p-6 ">
-          <div className="translate-y-10">
-            <div className="">
-              <h1 className="font-bold text-white text-3xl ">ProdSight</h1>
-              <h1 className="font-light text-white">Analytical Platform</h1>
+          <div className="">
+            <div className="flex items-center gap-4">
+              <img
+                src="/prodsight_logo.png"
+                alt="ProdSight logo"
+                className="h-20 w-20 object-contain"
+              />
+              <div>
+                <h1 className="text-3xl font-bold text-white">ProdSight</h1>
+                <p className="font-semibold text-gray-400">
+                  Analytics Platform
+                </p>
+              </div>
             </div>
             <div className="shadow-2xl w-sm bg-black/30 rounded-2xl p-5 mt-10">
               <div
