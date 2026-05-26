@@ -1,10 +1,17 @@
 import LoginPage from "./pages/LoginPage";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { RegisterPage } from "./pages/RegisterPage";
 
 function App() {
   return (
-    <>
-      <LoginPage />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

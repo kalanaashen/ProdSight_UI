@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 export const RegisterPage = () => {
   return (
@@ -37,7 +38,9 @@ export const RegisterPage = () => {
           </div>
           <div className="flex flex-row">
             <h1 className="font-light">Already have an account?</h1>
-            <button className="text-blue-600">Sign in</button>
+            <Link to="/login" className="text-blue-600">
+              Sign in
+            </Link>
           </div>
         </div>
       </div>
