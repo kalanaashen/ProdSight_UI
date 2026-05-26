@@ -8,9 +8,9 @@ const LoginPage = () => {
           <div className="translate-y-10">
             <div className="">
               <h1 className="font-bold text-white text-3xl ">ProdSight</h1>
-              <h1 className="font-light text-white">Analyitical Platform</h1>
+              <h1 className="font-light text-white">Analytical Platform</h1>
             </div>
-            <div className=" w-sm bg-black/30 rounded-2xl p-5 mt-10">
+            <div className="shadow-2xl w-sm bg-black/30 rounded-2xl p-5 mt-10">
               <div
                 className="
             flex flex-col  mb-5"
@@ -22,7 +22,7 @@ const LoginPage = () => {
                   Welcome Back
                 </h1>
                 <h1 className="font-semibold text-sm text-gray-500">
-                  Sign into Your Account
+                  Sign in to your account to continue
                 </h1>
               </div>
 
@@ -52,9 +52,17 @@ const LoginPage = () => {
               </div>
 
               <div className="mt-6">
-                <button className="py-2 w-full   text-white bg-blue-600 rounded-lg hover:bg-blue-700 hover:scale-105 duration-200">
+                <button className="py-2 w-full font-bold  text-white  bg-gradient-to-r from-blue-400  to-blue-900  rounded-lg  hover:scale-105 duration-200">
                   Login
                 </button>
+                <div className="flex justify-center">
+                  <h1 className="text-gray-500 mt-2">
+                    Don't have an account?{" "}
+                    <button className="text-blue-400 hover:text-blue-700">
+                      Sign Up
+                    </button>
+                  </h1>
+                </div>
               </div>
             </div>
           </div>
