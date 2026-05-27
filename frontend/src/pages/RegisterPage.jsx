@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router";
 import { useState } from "react";
+import { RegisterUser } from "../api/RegisterUserApi";
 
 export const RegisterPage = () => {
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    username: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -17,12 +18,11 @@ export const RegisterPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const registerUser = (e) => {
-    e.preventDefault();
+  const registerUser = async (e) => {
     setError("");
 
     if (
-      !formData.username ||
+      !formData.name ||
       !formData.email ||
       !formData.password ||
       !confirmPassword
@@ -44,12 +44,16 @@ export const RegisterPage = () => {
       setError("Passwords do not match.");
       return;
     }
-    if (formData.username.length < 1) {
+    if (formData.name.length < 1) {
       setError("Valid Username required");
       return;
     }
-
-    
+    try {
+      await RegisterUser(formData);
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+      setError(error.response?.data?.error || "Registration Failed!");
+    }
   };
 
   return (
@@ -85,9 +89,11 @@ export const RegisterPage = () => {
               <input
                 type="text"
                 placeholder="Kalana Ashen"
-                name="username"
-                value={formData.username}
-                onChange={onchange}
+                name="name"
+                value={formData.name}
+                onChange={(e) => {
+                  onchange(e);
+                }}
                 className="border text-white font-medium  bg-gray-700 border-gray-400 py-2 outline-none rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
               />
             </div>
@@ -100,7 +106,9 @@ export const RegisterPage = () => {
                 placeholder="you@company.com"
                 name="email"
                 value={formData.email}
-                onChange={onchange}
+                onChange={(e) => {
+                  onchange(e);
+                }}
                 className="  border text-white font-medium bg-gray-700 border-gray-400 py-2 outline-none rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
               />
             </div>
@@ -113,7 +121,9 @@ export const RegisterPage = () => {
                 type="password"
                 name="password"
                 value={formData.password}
-                onChange={onchange}
+                onChange={(e) => {
+                  onchange(e);
+                }}
                 className="  border text-white font-medium bg-gray-700 border-gray-400 py-2 outline-none rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
               />
             </div>
