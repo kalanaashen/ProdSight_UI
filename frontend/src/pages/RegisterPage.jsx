@@ -48,6 +48,8 @@ export const RegisterPage = () => {
       setError("Valid Username required");
       return;
     }
+
+    
   };
 
   return (
