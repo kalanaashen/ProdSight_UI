@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router";
 import { useState } from "react";
 import { RegisterUser } from "../api/RegisterUserApi";
+import { useNavigate } from "react-router";
 
 export const RegisterPage = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -49,7 +51,8 @@ export const RegisterPage = () => {
       return;
     }
     try {
-      await RegisterUser(formData);
+      const result = await RegisterUser(formData);
+      navigate("/login");
     } catch (error) {
       console.error(error.response?.data || error.message);
       setError(error.response?.data?.error || "Registration Failed!");
