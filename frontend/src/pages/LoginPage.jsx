@@ -1,7 +1,25 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useState } from "react-router";
 
 const LoginPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+
+  const onChangeLogin = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const login = async () => {
+
+    
+
+
+  };
   return (
     <>
       <div className="grid grid-cols-2 h-screen ">
@@ -44,6 +62,8 @@ const LoginPage = () => {
                   type="text"
                   className="p-1.5 rounded-lg border border-gray-300 text-white bg-white/20 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
                   placeholder="Joe"
+                  name="name"
+                  onChange={onChangeLogin()}
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -58,6 +78,8 @@ const LoginPage = () => {
                 <input
                   type="password"
                   className="p-1.5 rounded-lg border border-gray-300 text-white bg-white/20 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
+                  name="password"
+                  onChange={onChangeLogin()}
                 />
               </div>
 
