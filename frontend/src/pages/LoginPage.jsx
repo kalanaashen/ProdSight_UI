@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { useState } from "react";
-
+import { loginuser } from "../api/loginUserApi";
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,6 +29,12 @@ const LoginPage = () => {
     if (formData.password.length < 1) {
       setError("Password field is required.");
       return;
+    }
+    try {
+      await loginuser(formData);
+      console.log("Login Successful.");
+    } catch (error) {
+      console.log(error.response.data);
     }
   };
   return (
