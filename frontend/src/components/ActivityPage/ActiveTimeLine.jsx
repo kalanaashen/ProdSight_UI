@@ -4,17 +4,18 @@ const activetimedata = [
   {
     id: 1,
     app: "VSCODE",
-    time: "20.00",
-    duration: "-",
+    title: "app.jsx",
+    time: "2.00 PM",
+    duration: "45m",
     status: "productive",
-    mouseclicks: "1",
-    keyboardstrokes: "2",
+    mouseclicks: "100",
+    keyboardstrokes: "210",
   },
 ];
 export const ActiveTimeLine = () => {
   return (
     <div>
-      <div className="border bg-black/40 border-gray-400 rounded-2xl w-full ">
+      <div className="border bg-black/40 border-gray-400 rounded-2xl w-full h-screen">
         <h1 className="text-md text-white ">Activity Timeline</h1>
         <h1>Today</h1>
         <div>
@@ -22,6 +23,7 @@ export const ActiveTimeLine = () => {
             <ActiveTime
               app={data.app}
               time={data.time}
+              title={data.title}
               duration={data.duration}
               status={data.status}
               mouseclicks={data.mouseclicks}
