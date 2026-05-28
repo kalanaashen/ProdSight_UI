@@ -1,30 +1,33 @@
 import React from "react";
 import { ActivityCard } from "../components/ActivityPage/ActivityCard";
 import { Monitor, Clock, Keyboard, Mouse } from "lucide-react";
+import { CurrentSession } from "../components/ActivityPage/CurrentSession";
+import { ActiveTime } from "../components/ActivityPage/ActiveTime";
+import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 const activitydata = [
   {
     id: 1,
     name: "Active Window",
     data: "VS CODE",
-    icon: <Monitor className="text-blue-700"/>,
+    icon: <Monitor className="text-blue-700" />,
   },
   {
     id: 2,
     name: "Session Duration",
     data: "3h 45m",
-    icon: <Clock className="text-green-700"/>,
+    icon: <Clock className="text-green-700" />,
   },
   {
     id: 3,
     name: "Keyboard/Stroke",
     data: "45",
-    icon: <Keyboard  className="text-purple-700"/>,
+    icon: <Keyboard className="text-purple-700" />,
   },
   {
     id: 4,
     name: "Mouse Clicks",
     data: "10",
-    icon: <Mouse className="text-yellow-700"/>,
+    icon: <Mouse className="text-yellow-700" />,
   },
 ];
 export const ActivityPage = () => {
@@ -58,6 +61,13 @@ export const ActivityPage = () => {
               subtitle={activity.data}
             />
           ))}
+        </div>
+        <div>
+          <CurrentSession />
+        </div>
+
+        <div>
+          <ActiveTimeLine />
         </div>
       </div>
     </div>
