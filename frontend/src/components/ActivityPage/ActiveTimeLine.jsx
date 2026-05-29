@@ -25,9 +25,9 @@ const activetimedata = [
 export const ActiveTimeLine = () => {
   return (
     <div>
-      <div className="border bg-black/40 border-gray-400 rounded-2xl w-full h-screen">
-        <h1 className="text-md text-white ">Activity Timeline</h1>
-        <h1 className="text-white ">Today</h1>
+      <div className="border bg-black/40 border-slate-700 rounded-2xl w-full h-screen">
+        <h1 className="text-md text-white ml-1.5">Activity Timeline</h1>
+        <h1 className="text-white ml-1.5 ">Today</h1>
         <div>
           {activetimedata.map((data) => (
             <ActiveTime

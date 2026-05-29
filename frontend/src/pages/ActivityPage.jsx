@@ -71,7 +71,7 @@ export const ActivityPage = () => {
         <div>
           <ActiveTimeLine />
         </div>
-        <div className="grid grid-cols-2 p-8 gap-8 ">
+        <div className="grid md:grid-cols-2 grid-cols-1 p-8 gap-8 ">
           <div className="">
             <ActiveWindow />
           </div>

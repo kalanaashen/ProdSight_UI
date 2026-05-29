@@ -3,9 +3,9 @@ import ProgressBar from "../ProgressBar";
 export const DetailProgress = ({ title, progress }) => {
   return (
     <div>
-      <div className="flex flex-col bg-black/40 border ">
-        <h1 className="font-semibold text-white">{title}</h1>
-        <ProgressBar  progress={progress}  />
+      <div className="flex flex-col bg-black/30  rounded-2xl p-1 my-3">
+        <h1 className=" text-white">{title}</h1>
+        <ProgressBar progress={progress} />
       </div>
     </div>
   );
