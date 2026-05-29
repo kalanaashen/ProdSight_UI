@@ -11,7 +11,7 @@ export const ActiveTime = ({
 }) => {
   return (
     <div>
-      <div className="w-full  bg-black/10 rounded-3xl p-5 hover:bg-black/30">
+      <div className="w-full  bg-black/10 rounded-3xl p-5 hover:bg-black/30 my-1">
         <div className="flex flex-row gap-15">
           <div className="flex flex-col pl-4.5">
             <h1 className="text-gray-300 font-medium ">{time}</h1>

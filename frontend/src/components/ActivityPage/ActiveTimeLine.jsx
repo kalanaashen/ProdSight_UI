@@ -11,13 +11,23 @@ const activetimedata = [
     mouseclicks: "100",
     keyboardstrokes: "210",
   },
+  {
+    id: 1,
+    app: "Youtube",
+    title: "hello",
+    time: "2.00 PM",
+    duration: "45m",
+    status: "unproductive",
+    mouseclicks: "2100",
+    keyboardstrokes: "1210",
+  },
 ];
 export const ActiveTimeLine = () => {
   return (
     <div>
       <div className="border bg-black/40 border-gray-400 rounded-2xl w-full h-screen">
         <h1 className="text-md text-white ">Activity Timeline</h1>
-        <h1>Today</h1>
+        <h1 className="text-white ">Today</h1>
         <div>
           {activetimedata.map((data) => (
             <ActiveTime

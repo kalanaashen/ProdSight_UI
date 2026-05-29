@@ -33,7 +33,7 @@ const activitydata = [
 export const ActivityPage = () => {
   return (
     <div>
-      <div className="bg-slate-800 h-screen">
+      <div className="bg-slate-800 ">
         <div className="flex flex-row  justify-between p-7">
           <div className="flex flex-col">
             <h1 className="text-2xl font-bold text-white">
@@ -52,7 +52,7 @@ export const ActivityPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-row justify-around">
+        <div className="flex flex-row justify-around ">
           {activitydata.map((activity) => (
             <ActivityCard
               id={activity.id}
