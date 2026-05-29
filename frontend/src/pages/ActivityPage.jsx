@@ -4,6 +4,7 @@ import { Monitor, Clock, Keyboard, Mouse } from "lucide-react";
 import { CurrentSession } from "../components/ActivityPage/CurrentSession";
 import { ActiveTime } from "../components/ActivityPage/ActiveTime";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
+import { InputActivity } from "../components/ActivityPage/InputActivity";
 const activitydata = [
   {
     id: 1,
@@ -68,6 +69,10 @@ export const ActivityPage = () => {
 
         <div>
           <ActiveTimeLine />
+        </div>
+
+        <div>
+          <InputActivity />
         </div>
       </div>
     </div>
