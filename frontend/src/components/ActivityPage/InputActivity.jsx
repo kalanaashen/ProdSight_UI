@@ -10,7 +10,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
           <div className="flex flex-col">
             <div className="flex flex-row">
               <Keyboard className="text-purple-400" />
-              <h1 className="text-gray-400 font-medium"> KeyBoard Strokes</h1>
+              <h1 className="text-gray-300 font-medium"> KeyBoard Strokes</h1>
               <h1>{strokes}</h1>
             </div>
             <div>
@@ -21,7 +21,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
           <div className="flex flex-col">
             <div className="flex flex-row">
               <Mouse className="text-cyan-400" />
-              <h1 className="text-gray-400 font-medium"> Mouse Clicks</h1>
+              <h1 className="text-gray-300 font-medium"> Mouse Clicks</h1>
               <h1>{clicks}</h1>
             </div>
             <div>
@@ -34,7 +34,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
           <h1 className="text-gray-400">Idle time</h1>
           <h1 className="text-green-400 font-bold">Threshold-{idletime}</h1>
         </div>
-        <div></div>
+    
       </div>
     </div>
   );

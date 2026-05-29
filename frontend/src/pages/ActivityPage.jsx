@@ -5,6 +5,7 @@ import { CurrentSession } from "../components/ActivityPage/CurrentSession";
 import { ActiveTime } from "../components/ActivityPage/ActiveTime";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import { InputActivity } from "../components/ActivityPage/InputActivity";
+import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 const activitydata = [
   {
     id: 1,
@@ -70,9 +71,13 @@ export const ActivityPage = () => {
         <div>
           <ActiveTimeLine />
         </div>
-
-        <div>
-          <InputActivity />
+        <div className="grid grid-cols-2 p-8 gap-8 ">
+          <div className="">
+            <ActiveWindow />
+          </div>
+          <div className="">
+            <InputActivity />
+          </div>
         </div>
       </div>
     </div>

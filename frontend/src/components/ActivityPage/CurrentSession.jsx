@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export const CurrentSession = () => {
   return (
     <div>
@@ -7,7 +8,9 @@ export const CurrentSession = () => {
         <h1 className="text-white text-md">Current Session Metrics</h1>
       </div>
       <div>
-        <div></div>
+        <div>
+       
+        </div>
       </div>
     </div>
   );
