@@ -1,7 +1,9 @@
 import axiosInstance from "./axiosInstance";
 
 const getTodayActivity = async (username, date) => {
-  const res = await axiosInstance.get(`activity/${username}/${date}`);
+  const res = await axiosInstance.get(
+    `activity/today/${encodeURIComponent(username)}/${encodeURIComponent(date)}`,
+  );
   return res.data;
 };
 
