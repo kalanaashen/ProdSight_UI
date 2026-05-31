@@ -1,11 +1,13 @@
 import React from "react";
 import { ActivityCard } from "../components/ActivityPage/ActivityCard";
-import { Monitor, Clock, Keyboard, Mouse } from "lucide-react";
+import { Monitor, Clock, Keyboard, Mouse, UserRoundSearch } from "lucide-react";
 import { CurrentSession } from "../components/ActivityPage/CurrentSession";
 import { ActiveTime } from "../components/ActivityPage/ActiveTime";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
+
+import getTodayActivity from "../api/activityApi";
 const activitydata = [
   {
     id: 1,
@@ -32,6 +34,16 @@ const activitydata = [
     icon: <Mouse className="text-yellow-700" />,
   },
 ];
+const findDetails = async (username, date) => {
+  try {
+    const res = await getTodayActivity(username, date);
+
+    console.log(res);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const ActivityPage = () => {
   return (
     <div>
@@ -45,12 +57,13 @@ export const ActivityPage = () => {
               Real-time employee activity tracking and session logs
             </h1>
           </div>
-          <div className="flex flex-row">
+          <div className="flex flex-row items-baseline gap-4">
             <input
               type="text"
               className="border border-gray-300 py-2 px-1  rounded-xl text-white outline-none "
               placeholder="Username "
             />
+            <UserRoundSearch className="text-green-300" size={40} />
           </div>
         </div>
 

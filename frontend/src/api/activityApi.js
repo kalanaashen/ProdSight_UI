@@ -1,8 +1,15 @@
 import axiosInstance from "./axiosInstance";
 
 const getTodayActivity = async (username, date) => {
-  const res = await axiosInstance.get(`${username}/${date}`);
+  const res = await axiosInstance.get(`activity/${username}/${date}`);
   return res.data;
 };
+
+export const getActivites = async () => {
+  const res = await axiosInstance.get("activity/");
+  return res.data;
+};
+
+
 
 export default getTodayActivity;
