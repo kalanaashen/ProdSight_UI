@@ -8,6 +8,7 @@ import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 
 import getTodayActivity from "../api/activityApi";
+import { getActivites } from "../api/activityApi";
 const activitydata = [
   {
     id: 1,
