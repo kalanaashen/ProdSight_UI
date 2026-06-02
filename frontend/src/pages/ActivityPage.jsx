@@ -1,16 +1,10 @@
 import { useState } from "react";
 import { ActivityCard } from "../components/ActivityPage/ActivityCard";
-import {
-  Monitor,
-  Clock,
-  Keyboard,
-  Mouse,
-  UserRoundSearch,
-} from "lucide-react";
+import { Monitor, Clock, Keyboard, Mouse, UserRoundSearch } from "lucide-react";
 import { CurrentSession } from "../components/ActivityPage/CurrentSession";
 import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
-
+import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import getTodayActivity from "../api/activityApi";
 
 const testActivityDate = "2026-05-23T20:29:29.687Z";
@@ -23,12 +17,13 @@ export const ActivityPage = () => {
   const [totalDuration, setTotalDuration] = useState("");
   const [totalKeystrokes, setTotalKeystrokes] = useState("");
   const [totalMouseClicks, setTotalMouseClicks] = useState("");
+  const [activeWindow, setActiveWindow] = useState("No App");
 
   const activitydata = [
     {
       id: 1,
       name: "Active Window",
-      data: "VS CODE",
+      data: activeWindow,
       icon: <Monitor className="text-blue-700" />,
     },
     {
@@ -62,11 +57,12 @@ export const ActivityPage = () => {
     try {
       const res = await getTodayActivity(username.trim(), testActivityDate);
       const totals = res?.data ?? res;
-
-      setSearchedActivities([]);
+      const recordsArray = res?.records ?? [];
+      setSearchedActivities(recordsArray);
       setTotalDuration(totals?.totalDuration ?? 0);
       setTotalKeystrokes(totals?.totalKeyStrokes ?? 0);
       setTotalMouseClicks(totals?.totalMouseClicks ?? 0);
+      setActiveWindow(totals?.records?.[0]?.activeWindow ?? "No App");
     } catch (error) {
       const responseMessage = error.response?.data;
 
@@ -140,13 +136,15 @@ export const ActivityPage = () => {
           <CurrentSession />
         </div>
 
-        <div>{/* <ActiveTimeLine activities={searchedActivities} /> */}</div>
+        <div>
+          <ActiveTimeLine activities={searchedActivities} />
+        </div>
         <div className="grid md:grid-cols-2 grid-cols-1 p-8 gap-8 ">
           <div className="">
             <ActiveWindow />
           </div>
           <div className="">
-            <InputActivity />
+            <InputActivity strokes={totalKeystrokes} clicks={totalMouseClicks} />
           </div>
         </div>
       </div>

@@ -1,7 +1,22 @@
 import React from "react";
 import { Keyboard, Mouse } from "lucide-react";
 import ProgressBar from "../../components/ProgressBar";
+import { ar } from "zod/locales";
 export const InputActivity = ({ strokes, clicks, idletime }) => {
+
+  const calProgress=(strokes,clicks)=>{
+
+    const maxStrokes=20000;
+    const maxCliks=30000;
+    
+    const strokeProgress=Math.min((strokes/maxStrokes)*100,100);
+    const clickProgress=Math.min((clicks/maxCliks)*100,100);
+
+    const array=[strokeProgress,clickProgress];
+    return array;
+  } 
+
+
   return (
     <div>
       <div className="border border-slate-700 rounded-2xl max-w-xl bg-slate-900 p-6">
@@ -14,7 +29,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
               <h1>{strokes}</h1>
             </div>
             <div>
-              <ProgressBar />
+              <ProgressBar progress={calProgress(strokes, clicks)[1]} />
             </div>
           </div>
 
@@ -25,7 +40,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
               <h1>{clicks}</h1>
             </div>
             <div>
-              <ProgressBar />
+              <ProgressBar progress={calProgress(strokes, clicks)[0]} />
             </div>
           </div>
         </div>
