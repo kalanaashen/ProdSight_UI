@@ -1,6 +1,4 @@
-import React from "react";
-
-export const ActivityCard = ({ id, title, icon, subtitle }) => {
+export const ActivityCard = ({ title, icon, subtitle }) => {
   return (
     <div className="bg-black/30 border border-gray-700 rounded-3xl py-10 px-10 ">
       <div className="flex  flex-row gap-2">

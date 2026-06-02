@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { ActivityCard } from "../components/ActivityPage/ActivityCard";
-import { Monitor, Clock, Keyboard, Mouse, UserRoundSearch } from "lucide-react";
+import {
+  Monitor,
+  Clock,
+  Keyboard,
+  Mouse,
+  UserRoundSearch,
+} from "lucide-react";
 import { CurrentSession } from "../components/ActivityPage/CurrentSession";
-import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 
@@ -10,39 +15,41 @@ import getTodayActivity from "../api/activityApi";
 
 const testActivityDate = "2026-05-23T20:29:29.687Z";
 
-const activitydata = [
-  {
-    id: 1,
-    name: "Active Window",
-    data: "VS CODE",
-    icon: <Monitor className="text-blue-700" />,
-  },
-  {
-    id: 2,
-    name: "Session Duration",
-    data: "3h 45m",
-    icon: <Clock className="text-green-700" />,
-  },
-  {
-    id: 3,
-    name: "Keyboard/Stroke",
-    data: "45",
-    icon: <Keyboard className="text-purple-700" />,
-  },
-  {
-    id: 4,
-    name: "Mouse Clicks",
-    data: "10",
-    icon: <Mouse className="text-yellow-700" />,
-  },
-];
-
 export const ActivityPage = () => {
-  const [username, setUsername] = useState("Kalan Ashen");
-  const [searchedActivities, setSearchedActivities] = useState(null);
+  const [username, setUsername] = useState("Kalana Ashen");
+  const [searchedActivities, setSearchedActivities] = useState([]);
   const [searchError, setSearchError] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [totalDuration, setTotalDuration] = useState("");
+  const [totalKeystrokes, setTotalKeystrokes] = useState("");
+  const [totalMouseClicks, setTotalMouseClicks] = useState("");
 
+  const activitydata = [
+    {
+      id: 1,
+      name: "Active Window",
+      data: "VS CODE",
+      icon: <Monitor className="text-blue-700" />,
+    },
+    {
+      id: 2,
+      name: "Session Duration",
+      data: totalDuration,
+      icon: <Clock className="text-green-700" />,
+    },
+    {
+      id: 3,
+      name: "Keyboard/Stroke",
+      data: totalKeystrokes,
+      icon: <Keyboard className="text-purple-700" />,
+    },
+    {
+      id: 4,
+      name: "Mouse Clicks",
+      data: totalMouseClicks,
+      icon: <Mouse className="text-yellow-700" />,
+    },
+  ];
   const finddetails = async () => {
     if (!username.trim()) {
       setSearchError("Enter a username before searching.");
@@ -54,11 +61,12 @@ export const ActivityPage = () => {
 
     try {
       const res = await getTodayActivity(username.trim(), testActivityDate);
-      const activities = Array.isArray(res)
-        ? res
-        : (res?.activities ?? res?.data ?? (res ? [res] : []));
+      const totals = res?.data ?? res;
 
-      setSearchedActivities(activities);
+      setSearchedActivities([]);
+      setTotalDuration(totals?.totalDuration ?? 0);
+      setTotalKeystrokes(totals?.totalKeyStrokes ?? 0);
+      setTotalMouseClicks(totals?.totalMouseClicks ?? 0);
     } catch (error) {
       const responseMessage = error.response?.data;
 
@@ -122,7 +130,6 @@ export const ActivityPage = () => {
           {activitydata.map((activity) => (
             <ActivityCard
               key={activity.id}
-              id={activity.id}
               icon={activity.icon}
               title={activity.name}
               subtitle={activity.data}
@@ -133,9 +140,7 @@ export const ActivityPage = () => {
           <CurrentSession />
         </div>
 
-        <div>
-          <ActiveTimeLine activities={searchedActivities} />
-        </div>
+        <div>{/* <ActiveTimeLine activities={searchedActivities} /> */}</div>
         <div className="grid md:grid-cols-2 grid-cols-1 p-8 gap-8 ">
           <div className="">
             <ActiveWindow />
