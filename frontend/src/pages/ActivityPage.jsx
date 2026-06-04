@@ -6,6 +6,7 @@ import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import getTodayActivity from "../api/activityApi";
+import { set } from "zod";
 
 const testActivityDate = "2026-05-23T20:29:29.687Z";
 
@@ -18,6 +19,7 @@ export const ActivityPage = () => {
   const [totalKeystrokes, setTotalKeystrokes] = useState("");
   const [totalMouseClicks, setTotalMouseClicks] = useState("");
   const [activeWindow, setActiveWindow] = useState("No App");
+  const [idleSeconds, setIdleSeconds] = useState("");
 
   const activitydata = [
     {
@@ -63,6 +65,7 @@ export const ActivityPage = () => {
       setTotalKeystrokes(totals?.totalKeyStrokes ?? 0);
       setTotalMouseClicks(totals?.totalMouseClicks ?? 0);
       setActiveWindow(totals?.records?.[0]?.activeWindow ?? "No App");
+      setIdleSeconds(totals?.idleSeconds ?? 0);
     } catch (error) {
       const responseMessage = error.response?.data;
 
@@ -132,11 +135,9 @@ export const ActivityPage = () => {
             />
           ))}
         </div>
-        <div>
-          <CurrentSession />
-        </div>
+     
 
-        <div>
+        <div className="pt-2.5">
           <ActiveTimeLine activities={searchedActivities} />
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 p-8 gap-8 ">
@@ -144,7 +145,11 @@ export const ActivityPage = () => {
             <ActiveWindow />
           </div>
           <div className="">
-            <InputActivity strokes={totalKeystrokes} clicks={totalMouseClicks} />
+            <InputActivity
+              strokes={totalKeystrokes}
+              clicks={totalMouseClicks}
+              idletime={idleSeconds}
+            />
           </div>
         </div>
       </div>
