@@ -1,6 +1,7 @@
 import React from "react";
 import { id } from "zod/locales";
 import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
+import { EmployeeCard } from "../components/EmployeeComponents/EmployeeCard";
 export const EmployeePage = () => {
   const data = [
     {
@@ -37,11 +38,27 @@ export const EmployeePage = () => {
           Monitor and manage employee productivity metrics
         </h1>
       </div>
-    
+
       <div className="flex flex-row justify-around mt-10">
-        {data.map((item)=>(
-          <ActiveCard key={item.id} title={item.title} value={item.value} subvalue={item.subvalue} />
+        {data.map((item) => (
+          <ActiveCard
+            key={item.id}
+            title={item.title}
+            value={item.value}
+            subvalue={item.subvalue}
+          />
         ))}
+      </div>
+
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-8 p-8">
+        <EmployeeCard
+          name="John Doe"
+          role="Software Engineer"
+          pro_score={80}
+          foc_score={70}
+          activetime="6h 30m"
+          idletime="1h 15m"
+        />
       </div>
     </div>
   );

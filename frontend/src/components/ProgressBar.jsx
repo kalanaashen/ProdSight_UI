@@ -4,7 +4,7 @@ export default function ProgressBar({ progress, title }) {
   const clampProgress = Math.min(Math.max(progress, 0), 100);
 
   return (
-    <div className="w-3/4">
+    <div className="w-full">
       <div className="flex justify-between ">
         <span className="text-sm font-medium text-slate-700 dark:text-white my-2">
           {title}
