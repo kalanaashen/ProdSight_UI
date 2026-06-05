@@ -45,6 +45,11 @@ export const WebUsagePage = () => {
           <ActiveCard key={card.id} {...card} />
         ))}
       </div>
+
+      <div className="flex flex-row gap-x-2.5">
+        <h1>pie chart</h1>
+        <h1>line chart</h1>
+      </div>
     </div>
   );
 };
