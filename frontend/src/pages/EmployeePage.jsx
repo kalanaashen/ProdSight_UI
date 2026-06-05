@@ -2,6 +2,7 @@ import React from "react";
 import { id } from "zod/locales";
 import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
 import { EmployeeCard } from "../components/EmployeeComponents/EmployeeCard";
+import { EmployeeTable } from "../components/EmployeeComponents/EmployeeTable";
 export const EmployeePage = () => {
   const data = [
     {
@@ -58,6 +59,18 @@ export const EmployeePage = () => {
           foc_score={70}
           activetime="6h 30m"
           idletime="1h 15m"
+        />
+      </div>
+
+      <div>
+        <EmployeeTable
+          name={"John Doe"}
+          role="Software Engineer"
+          status="Active"
+          proc_score={"23"}
+          foc_score={"67"}
+          activetime={"6h 30m"}
+          trend="Increasing"
         />
       </div>
     </div>

@@ -7,6 +7,7 @@ import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import getTodayActivity from "../api/activityApi";
 import { set } from "zod";
+import { EmployeePage } from "./EmployeePage";
 
 const testActivityDate = "2026-05-23T20:29:29.687Z";
 
@@ -135,7 +136,6 @@ export const ActivityPage = () => {
             />
           ))}
         </div>
-     
 
         <div className="pt-2.5">
           <ActiveTimeLine activities={searchedActivities} />
@@ -151,6 +151,8 @@ export const ActivityPage = () => {
               idletime={idleSeconds}
             />
           </div>
+
+   
         </div>
       </div>
     </div>

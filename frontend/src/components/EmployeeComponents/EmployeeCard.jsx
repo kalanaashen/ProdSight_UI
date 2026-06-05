@@ -17,23 +17,23 @@ export const EmployeeCard = ({
           </div>
           <div className="flex flex-col">
             <h1 className="font-bold text-xl text-white">{name}</h1>
-            <h1 className="text-gray-400">{role}</h1>
+            <h1 className="text-sm font-medium text-gray-400">{role}</h1>
           </div>
         </div>
 
-        <div className="flex flex-col ">
+        <div className="flex flex-col pb-0.5">
           <ProgessBar progress={pro_score} title={"Productivity Score"} />
           <ProgessBar progress={foc_score} title={"Focus Score"} />
         </div>
-        <div className=" h-0.5 p-0.5 rounded-full bg-gray-500 "></div>
+        <div className=" h-px  rounded-full bg-gray-500 "></div>
         <div className="flex flex-row justify-between pt-2">
           <div className="flex flex-col p-0.5">
             <h1 className="text-white text-sm">Active Time</h1>
-            <h1 className="text-bold text-white">{activetime}</h1>
+            <h1 className="font-bold text-white">{activetime}</h1>
           </div>
           <div className="flex flex-col p-0.5">
             <h1 className="text-white text-sm">Idle Time</h1>
-            <h1 className="text-bold text-white ">{idletime}</h1>
+            <h1 className="font-bold text-white ">{idletime}</h1>
           </div>
         </div>
       </div>
