@@ -1,6 +1,9 @@
 import React from "react";
 
-import { ActiveCard } from "../EmployeeComponents/ActiveCard";
+import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
+import { ActivityBarChart } from "../components/ActivityBarChart";
+import { BrowserAnalyticsChart } from "../components/BrowserAnaylticsChart";
+import { WeeklyTrendsChart } from "../components/WeeklyTrendChart";
 
 export const WebUsagePage = () => {
   const carddata = [
@@ -47,8 +50,19 @@ export const WebUsagePage = () => {
       </div>
 
       <div className="flex flex-row gap-x-2.5">
-        <h1>pie chart</h1>
-        <h1>line chart</h1>
+        <div>
+          <ActivityBarChart />
+        </div>
+        <div>
+          <BrowserAnalyticsChart />
+        </div>
+
+        <div>
+          <WeeklyTrendsChart />
+        </div>
+        <div>
+          
+        </div>
       </div>
     </div>
   );
