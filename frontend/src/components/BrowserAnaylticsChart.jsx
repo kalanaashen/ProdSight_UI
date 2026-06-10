@@ -12,8 +12,8 @@ export const BrowserAnalyticsChart = () => {
         backgroundColor: ["#3b82f6", "#f59e0b", "#06b6d4", "#a855f7"], // Blue, Orange, Cyan, Purple
         borderWidth: 4,
         borderColor: "#0f172a", // Matches your dark slate background color to create spacing gaps
-      }
-    ]
+      },
+    ],
   };
 
   const options = {
@@ -23,10 +23,14 @@ export const BrowserAnalyticsChart = () => {
     plugins: {
       legend: {
         position: "bottom",
-        labels: { color: "#ffffff", usePointStyle: true, padding: 20 }
-      }
-    }
+        labels: { color: "#ffffff", usePointStyle: true, padding: 20 },
+      },
+    },
   };
 
-  return <div className="h-[320px] w-full"><Doughnut data={data} options={options} /></div>;
+  return (
+    <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 w-full h-[350px]">
+      <Doughnut data={data} options={options} />
+    </div>
+  );
 };

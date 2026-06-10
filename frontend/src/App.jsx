@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ActivityPage } from "./pages/ActivityPage";
 import { EmployeePage } from "./pages/EmployeePage";
-import { WebUsagePage } from "./components/WebSitePage/WebUsagePage";
+import { WebUsagePage } from "./pages/WebUsagePage";
 
 function App() {
   return (

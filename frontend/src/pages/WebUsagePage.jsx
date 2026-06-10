@@ -1,10 +1,9 @@
-import React from "react";
-
 import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
 import { ActivityBarChart } from "../components/ActivityBarChart";
 import { BrowserAnalyticsChart } from "../components/BrowserAnaylticsChart";
 import { WeeklyTrendsChart } from "../components/WeeklyTrendChart";
-
+import { HourlyActivityChart } from "../components/HourlyActivityChart";
+import { WebSiteTable } from "../components/WebSitePage/WebSiteTable";
 export const WebUsagePage = () => {
   const carddata = [
     {
@@ -33,7 +32,7 @@ export const WebUsagePage = () => {
     },
   ];
   return (
-    <div className="h-screen bg-slate-900">
+    <div className="h-full bg-slate-900">
       <div className="flex flex-col py-10">
         <h1 className="font-bold text-3xl text-white">
           Website Usage Analytics
@@ -49,7 +48,7 @@ export const WebUsagePage = () => {
         ))}
       </div>
 
-      <div className="flex flex-row gap-x-2.5">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-8 p-8">
         <div>
           <ActivityBarChart />
         </div>
@@ -61,8 +60,12 @@ export const WebUsagePage = () => {
           <WeeklyTrendsChart />
         </div>
         <div>
-          
+          <HourlyActivityChart />
         </div>
+      </div>
+
+      <div className="p-8 pt-0">
+        <WebSiteTable />
       </div>
     </div>
   );

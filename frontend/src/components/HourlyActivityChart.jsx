@@ -46,5 +46,5 @@ export const HourlyActivityChart = () => {
     }
   };
 
-  return <div className="h-[300px] w-full"><Line data={data} options={options} /></div>;
+  return <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 w-full h-[350px]"><Line data={data} options={options} /></div>;
 };
