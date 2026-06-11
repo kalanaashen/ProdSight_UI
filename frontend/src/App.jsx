@@ -4,6 +4,7 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { ActivityPage } from "./pages/ActivityPage";
 import { EmployeePage } from "./pages/EmployeePage";
 import { WebUsagePage } from "./pages/WebUsagePage";
+import { AppUsagePage } from "./pages/AppUsagePage";
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="/activity" element={<ActivityPage />} />
         <Route path="/employee" element={<EmployeePage />} />
         <Route path="/web" element={<WebUsagePage />} />
+
+        <Route path="/app" element={<AppUsagePage/>}/>
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
     </BrowserRouter>

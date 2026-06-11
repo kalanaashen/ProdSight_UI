@@ -1,5 +1,7 @@
 import React from "react";
+import { AppCategoryChart } from "../components/AppUsage/AppCategoryChart";
 import { ScreenCard } from "../components/AppUsage/ScreenCard";
+import { TopApplicationsChart } from "../components/AppUsage/TopApplicationsChart";
 
 export const AppUsagePage = () => {
   const carddata = [
@@ -41,6 +43,11 @@ export const AppUsagePage = () => {
         {carddata.map((data) => (
           <ScreenCard key={data.id} {...data} />
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <TopApplicationsChart />
+        <AppCategoryChart />
       </div>
     </div>
   );
