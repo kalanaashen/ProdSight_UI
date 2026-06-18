@@ -38,7 +38,7 @@ export const AppCategoryChart = () => {
   };
 
   return (
-    <div className="h-[350px] w-full rounded-2xl border border-slate-700 bg-slate-900 p-6">
+    <div className=" w-full rounded-2xl border border-slate-700 bg-slate-900 p-6">
       <h3 className="mb-4 text-lg font-semibold text-white">
         App Category Distribution
       </h3>
