@@ -11,16 +11,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<AdminLayout />}>
           <Route index element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
           <Route path="activity" element={<ActivityPage />} />
           <Route path="employee" element={<EmployeePage />} />
           <Route path="web" element={<WebUsagePage />} />
-           <Route path="app" element={<AppUsagePage />} />
+          <Route path="app" element={<AppUsagePage />} />
         </Route>
-       
+
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
     </BrowserRouter>
