@@ -4,13 +4,15 @@ import { TopApplicationsChart } from "../components/AppUsage/TopApplicationsChar
 import { AppTable } from "../components/AppUsage/AppTable";
 import { useEmployee } from "../context/EmployeeContext";
 import { getAppUsageByUserId } from "../api/appUsageApi";
-import { getTopApps } from "../api/analyticsApi";
+import { getDailyAnalytics, getMonthlyAnalytics, getTopApps } from "../api/analyticsApi";
 import { getApiErrorMessage } from "../api/apiHelpers";
 
 export const AppUsagePage = () => {
   const { selectedEmployee, selectedEmployeeId } = useEmployee();
   const [appUsage, setAppUsage] = useState([]);
   const [topApps, setTopApps] = useState([]);
+  const [dailyAnalytics, setDailyAnalytics] = useState(null);
+  const [monthlyAnalytics, setMonthlyAnalytics] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,11 +25,15 @@ export const AppUsagePage = () => {
       Promise.all([
         getAppUsageByUserId(selectedEmployeeId),
         getTopApps(selectedEmployeeId),
+        getDailyAnalytics(selectedEmployeeId),
+        getMonthlyAnalytics(selectedEmployeeId),
       ])
-        .then(([usage, apps]) => {
+        .then(([usage, apps, daily, monthly]) => {
           if (!active) return;
           setAppUsage(Array.isArray(usage) ? usage : usage ? [usage] : []);
           setTopApps(Array.isArray(apps) ? apps : []);
+          setDailyAnalytics(daily ?? null);
+          setMonthlyAnalytics(Array.isArray(monthly) ? monthly : []);
         })
         .catch((requestError) => {
           if (active) setError(getApiErrorMessage(requestError, requestError.message));
@@ -90,6 +96,17 @@ export const AppUsagePage = () => {
       </div>
       {loading && <p className="mt-4 text-slate-300">Loading app usage…</p>}
       {error && <p className="mt-4 text-red-300">{error}</p>}
+      {selectedEmployeeId && !loading && !error && (
+        <div className="mt-4 flex flex-wrap gap-5 text-sm text-slate-300">
+          <span>Today productivity: {dailyAnalytics?.productivityScore ?? 0}%</span>
+          <span>Today focus: {dailyAnalytics?.focusScore ?? 0}%</span>
+          <span>
+            30-day average: {monthlyAnalytics.length
+              ? Math.round(monthlyAnalytics.reduce((sum, item) => sum + (Number(item.productivityScore) || 0), 0) / monthlyAnalytics.length)
+              : 0}%
+          </span>
+        </div>
+      )}
 
       <div className="my-10 grid grid-cols-1 gap-5 md:grid-cols-3">
         {carddata.map((data) => (

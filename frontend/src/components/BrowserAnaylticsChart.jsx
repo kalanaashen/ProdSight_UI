@@ -3,12 +3,18 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const BrowserAnalyticsChart = () => {
+export const BrowserAnalyticsChart = ({ websites = [] }) => {
+  const categoryTotals = websites.reduce((totals, website) => {
+    const category = website.category ?? "neutral";
+    totals[category] = (totals[category] ?? 0) + (Number(website.duration) || 0);
+    return totals;
+  }, {});
+  const labels = Object.keys(categoryTotals);
   const data = {
-    labels: ["Chrome", "Firefox", "Safari", "Edge"],
+    labels: labels.length ? labels.map((label) => `${label[0].toUpperCase()}${label.slice(1)}`) : ["No data"],
     datasets: [
       {
-        data: [65, 20, 10, 5],
+        data: labels.length ? Object.values(categoryTotals) : [1],
         backgroundColor: ["#3b82f6", "#f59e0b", "#06b6d4", "#a855f7"], // Blue, Orange, Cyan, Purple
         borderWidth: 4,
         borderColor: "#0f172a", // Matches your dark slate background color to create spacing gaps

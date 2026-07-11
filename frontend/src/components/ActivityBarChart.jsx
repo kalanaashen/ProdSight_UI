@@ -19,6 +19,9 @@ ChartJS.register(
 );
 
 export const ActivityBarChart = ({ activities }) => {
+  const hasWebsiteData = activities?.some(
+    (item) => item.duration != null && item.keystrokes == null,
+  );
  
   const options = {
     responsive: true,
@@ -43,11 +46,29 @@ export const ActivityBarChart = ({ activities }) => {
 
 
   const data = {
-    labels: ["9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM"], 
-    datasets: [
+    labels: activities?.length
+      ? activities.map((log) =>
+          log.recordedAt
+            ? new Date(log.recordedAt).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : (log.domain ?? log.title ?? "Visit"),
+        )
+      : ["9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM"],
+    datasets: hasWebsiteData
+      ? [
+          {
+            label: "Minutes",
+            data: activities.map((log) => Number(log.duration) || 0),
+            backgroundColor: "#818cf8",
+            borderRadius: 6,
+          },
+        ]
+      : [
       {
         label: "Keystrokes",
-        data: activities?.map((log) => log.keystrokes) || [
+        data: activities?.length ? activities.map((log) => log.keystrokes ?? 0) : [
           120, 450, 380, 50, 520, 310,
         ],
         backgroundColor: "#818cf8",
@@ -55,19 +76,19 @@ export const ActivityBarChart = ({ activities }) => {
       },
       {
         label: "Mouse Clicks",
-        data: activities?.map((log) => log.mouseClicks) || [
+        data: activities?.length ? activities.map((log) => log.mouseClicks ?? 0) : [
           45, 110, 85, 15, 130, 90,
         ],
         backgroundColor: "#f59e0b", 
         borderRadius: 6,
       },
-    ],
+      ],
   };
 
   return (
     <div className="bg-slate-900 p-6 rounded-2xl border border-slate-700 w-full h-[350px]">
       <h3 className="text-white font-semibold text-lg mb-4">
-        Input Metrics Comparison
+        {hasWebsiteData ? "Website Time by Visit" : "Input Metrics Comparison"}
       </h3>
       <div className="w-full h-[85%]">
         {/* 4. Render the native Canvas element */}

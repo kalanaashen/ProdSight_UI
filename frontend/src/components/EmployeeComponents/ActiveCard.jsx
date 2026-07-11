@@ -1,13 +1,9 @@
-import React from "react";
-
 export const ActiveCard = ({ title, value, subvalue }) => {
   return (
-    <div>
-      <div className="border border-gray-600 rounded-2xl bg-black/20 p-6 w-54 h-32 flex flex-col justify-between">
-        <h1 className=" text-md text-gray-400">{title}</h1>
-        <p className="font-bold text-2xl text-white">{value}</p>
-        <h1 className=" text-sm text-green-500">{subvalue}</h1>
-      </div>
+    <div className="flex min-h-36 w-full flex-col justify-between rounded-2xl border border-slate-700 bg-slate-900/70 p-5 shadow-lg shadow-black/10">
+      <p className="text-sm font-medium text-gray-400">{title}</p>
+      <p className="truncate text-2xl font-bold text-white" title={String(value)}>{value}</p>
+      <p className="text-xs text-emerald-400">{subvalue}</p>
     </div>
   );
 };

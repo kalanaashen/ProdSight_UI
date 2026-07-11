@@ -11,12 +11,7 @@ import {
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 export const TopApplicationsChart = ({ applications = [] }) => {
-  const chartApps = applications.length
-    ? applications
-    : [
-        { name: "VS Code", duration: 285 },
-        { name: "Chrome", duration: 165 },
-      ];
+  const chartApps = applications;
   const data = {
     labels: chartApps.map((app) => app.name),
     datasets: [

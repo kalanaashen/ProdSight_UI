@@ -90,14 +90,14 @@ export const WebUsagePage = () => {
           <ActivityBarChart activities={webUsage} />
         </div>
         <div>
-          <BrowserAnalyticsChart />
+          <BrowserAnalyticsChart websites={webUsage} />
         </div>
 
         <div>
           <WeeklyTrendsChart summaries={weeklyAnalytics} />
         </div>
         <div>
-          <HourlyActivityChart />
+          <HourlyActivityChart websites={webUsage} />
         </div>
       </div>
 

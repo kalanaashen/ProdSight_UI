@@ -1,4 +1,3 @@
-import React from "react";
 import ProgessBar from "../ProgressBar";
 export const EmployeeCard = ({
   name,
@@ -9,11 +8,10 @@ export const EmployeeCard = ({
   idletime,
 }) => {
   return (
-    <div>
-      <div className="border border-gray-600 rounded-2xl p-10 bg-black/20 w-80  h-80 flex flex-col justify-between">
+    <div className="flex min-h-80 w-full flex-col justify-between rounded-2xl border border-slate-700 bg-slate-900/70 p-6 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-slate-600">
         <div className="flex flex-row items-center gap-4">
           <div className="bg-sky-400 w-10 h-10 rounded-full flex items-center justify-center font-semibold text-lg text-white">
-            {name[0].toUpperCase()}
+            {name?.[0]?.toUpperCase() ?? "?"}
           </div>
           <div className="flex flex-col">
             <h1 className="font-bold text-xl text-white">{name}</h1>
@@ -25,7 +23,7 @@ export const EmployeeCard = ({
           <ProgessBar progress={pro_score} title={"Productivity Score"} />
           <ProgessBar progress={foc_score} title={"Focus Score"} />
         </div>
-        <div className=" h-px  rounded-full bg-gray-500 "></div>
+        <div className="h-px rounded-full bg-slate-700"></div>
         <div className="flex flex-row justify-between pt-2">
           <div className="flex flex-col p-0.5">
             <h1 className="text-white text-sm">Active Time</h1>
@@ -36,7 +34,6 @@ export const EmployeeCard = ({
             <h1 className="font-bold text-white ">{idletime}</h1>
           </div>
         </div>
-      </div>
     </div>
   );
 };

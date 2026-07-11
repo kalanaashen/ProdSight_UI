@@ -1,7 +1,6 @@
-import React from "react";
 import { Keyboard, Mouse } from "lucide-react";
 import ProgressBar from "../../components/ProgressBar";
-import { ar } from "zod/locales";
+import { formatSeconds } from "../../utils/timeFormat";
 export const InputActivity = ({ strokes, clicks, idletime }) => {
   const calProgress = (strokes, clicks) => {
     const maxStrokes = 20000;
@@ -45,7 +44,7 @@ export const InputActivity = ({ strokes, clicks, idletime }) => {
         <div className="flex flex-row justify-between">
           <h1 className="text-gray-400">Idle time</h1>
           <h1 className="text-green-400 font-bold">
-            Threshold-{idletime ? idletime : "Unknown"}
+            {idletime != null && idletime !== "" ? formatSeconds(idletime) : "Unknown"}
           </h1>
         </div>
       </div>

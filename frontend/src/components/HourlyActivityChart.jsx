@@ -11,13 +11,23 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Tooltip);
 
-export const HourlyActivityChart = () => {
+export const HourlyActivityChart = ({ websites = [] }) => {
+  const hourlyTotals = websites.reduce((totals, website) => {
+    const hour = website.recordedAt ? new Date(website.recordedAt).getHours() : 0;
+    const category = website.category === "productive" ? "active" : "idle";
+    totals[hour] ??= { active: 0, idle: 0 };
+    totals[hour][category] += Number(website.duration) || 0;
+    return totals;
+  }, {});
+  const hours = Object.keys(hourlyTotals).map(Number).sort((a, b) => a - b);
   const data = {
-    labels: ["9AM", "11AM", "1PM", "2PM", "3PM", "4PM", "6PM"],
+    labels: hours.length
+      ? hours.map((hour) => new Date(2000, 0, 1, hour).toLocaleTimeString([], { hour: "numeric" }))
+      : ["No data"],
     datasets: [
       {
         label: "Active Session",
-        data: [35, 75, 30, 60, 75, 80, 40],
+        data: hours.length ? hours.map((hour) => hourlyTotals[hour].active) : [0],
         borderColor: "#10b981", // Green line
         backgroundColor: "rgba(16, 185, 129, 0.2)", // Translucent green fill
         fill: true,
@@ -26,7 +36,7 @@ export const HourlyActivityChart = () => {
       },
       {
         label: "Idle Session",
-        data: [5, 10, 20, 15, 10, 8, 18],
+        data: hours.length ? hours.map((hour) => hourlyTotals[hour].idle) : [0],
         borderColor: "#ef4444", // Red line
         backgroundColor: "rgba(239, 68, 68, 0.2)", // Translucent red fill
         fill: true,

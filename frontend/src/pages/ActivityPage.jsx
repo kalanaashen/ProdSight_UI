@@ -6,6 +6,7 @@ import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import getTodayActivity from "../api/activityApi";
 import { useEmployee } from "../context/EmployeeContext";
+import { formatSeconds } from "../utils/timeFormat";
 
 export const ActivityPage = () => {
   const { selectedEmployee } = useEmployee();
@@ -28,7 +29,7 @@ export const ActivityPage = () => {
     {
       id: 2,
       name: "Session Duration",
-      data: totalDuration,
+      data: formatSeconds(totalDuration),
       icon: <Clock className="text-green-700" />,
     },
     {
@@ -55,7 +56,8 @@ export const ActivityPage = () => {
     setSearchError("");
 
     try {
-      const res = await getTodayActivity(selectedEmployee, new Date().toISOString());
+      const today = new Date().toISOString().split("T")[0];
+      const res = await getTodayActivity(selectedEmployee, today);
       const totals = res?.data ?? res;
       const recordsArray = totals?.records ?? [];
       setSearchedActivities(recordsArray);
@@ -63,7 +65,7 @@ export const ActivityPage = () => {
       setTotalKeystrokes(totals?.totalKeyStrokes ?? 0);
       setTotalMouseClicks(totals?.totalMouseClicks ?? 0);
       setActiveWindow(recordsArray[0]?.activeWindow ?? "No App");
-      setIdleSeconds(totals?.idleSeconds ?? 0);
+      setIdleSeconds(totals?.totalIdleSeconds ?? 0);
     } catch (error) {
       const responseMessage = error.response?.data;
 
