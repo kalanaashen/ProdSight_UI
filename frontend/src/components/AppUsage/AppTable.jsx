@@ -1,4 +1,3 @@
-import React from 'react'
 const defaultAppRows = [
   {
     id: 1,
@@ -22,7 +21,7 @@ const defaultAppRows = [
     lastvisited: "2026.06.09",
   },
 ];
-export const AppTable = (apps=defaultAppRows) => {
+export const AppTable = ({ apps = defaultAppRows }) => {
   return (
     <div className="w-full overflow-hidden rounded-2xl border border-gray-600 bg-black/20">
       <div className="flex flex-col gap-1 border-b border-gray-700 px-6 py-5">
@@ -47,11 +46,11 @@ export const AppTable = (apps=defaultAppRows) => {
             {apps.length > 0 ? (
               apps.map((app) => (
                 <tr
-                  key={app.id ?? app.webname}
+                  key={app.id ?? app.appname}
                   className="bg-slate-900 transition-colors hover:bg-slate-950"
                 >
                   <td className="px-6 py-4 font-semibold text-white">
-                    {app.webname}
+                    {app.appname}
                   </td>
                   <td className="px-6 py-4 text-gray-300">{app.time}</td>
                   <td className="px-6 py-4 text-gray-300">

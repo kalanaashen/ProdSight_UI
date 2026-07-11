@@ -10,12 +10,18 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
-export const TopApplicationsChart = () => {
+export const TopApplicationsChart = ({ applications = [] }) => {
+  const chartApps = applications.length
+    ? applications
+    : [
+        { name: "VS Code", duration: 285 },
+        { name: "Chrome", duration: 165 },
+      ];
   const data = {
-    labels: ["VS Code", "Chrome", "Slack", "YouTube", "Spotify", "Terminal", "Notion"],
+    labels: chartApps.map((app) => app.name),
     datasets: [
       {
-        data: [285, 165, 98, 54, 42, 28, 14],
+        data: chartApps.map((app) => app.duration),
         backgroundColor: [
           "#3b82f6",
           "#f59e0b",

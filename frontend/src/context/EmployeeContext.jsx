@@ -6,21 +6,29 @@ export function EmployeeProvider({ children }) {
   const [selectedEmployee, setSelectedEmployeeState] = useState(
     () => localStorage.getItem("selectedEmployee") || "",
   );
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState(
+    () => localStorage.getItem("selectedEmployeeId") || "",
+  );
 
-  const setSelectedEmployee = (employeeName) => {
+  const setSelectedEmployee = (employeeName, employeeId = "") => {
     const normalizedName = employeeName.trim();
     setSelectedEmployeeState(normalizedName);
 
     if (normalizedName) {
       localStorage.setItem("selectedEmployee", normalizedName);
+      setSelectedEmployeeId(employeeId);
+      if (employeeId) localStorage.setItem("selectedEmployeeId", employeeId);
+      else localStorage.removeItem("selectedEmployeeId");
     } else {
       localStorage.removeItem("selectedEmployee");
+      localStorage.removeItem("selectedEmployeeId");
+      setSelectedEmployeeId("");
     }
   };
 
   const value = useMemo(
-    () => ({ selectedEmployee, setSelectedEmployee }),
-    [selectedEmployee],
+    () => ({ selectedEmployee, selectedEmployeeId, setSelectedEmployee }),
+    [selectedEmployee, selectedEmployeeId],
   );
 
   return (

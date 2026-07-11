@@ -3,25 +3,33 @@ import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
 import { EmployeeCard } from "../components/EmployeeComponents/EmployeeCard";
 import { EmployeeTable } from "../components/EmployeeComponents/EmployeeTable";
 import { getEmployees } from "../api/employeeApi";
+import { getAllProductivitySummaries } from "../api/productivitySummaryApi";
 export const EmployeePage = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     let active = true;
 
-    getEmployees()
-      .then((users) => {
+    Promise.all([getEmployees(), getAllProductivitySummaries()])
+      .then(([users, summaries]) => {
         if (!active) return;
+        const latestByUser = (Array.isArray(summaries) ? summaries : []).reduce((result, summary) => {
+          const userId = String(summary.userId);
+          if (!result[userId] || new Date(summary.summaryDate) > new Date(result[userId].summaryDate)) result[userId] = summary;
+          return result;
+        }, {});
         setEmployees(
-          users.map((user) => ({
+          users.map((user) => {
+            const summary = latestByUser[String(user._id)] ?? {};
+            return ({
             name: user.name ?? user.username ?? user.fullName,
             role: user.role ?? user.jobTitle ?? "Employee",
             status: user.status ?? "Offline",
-            proc_score: user.productivityScore ?? user.proc_score ?? 0,
-            foc_score: user.focusScore ?? user.foc_score ?? 0,
-            activetime: user.activeTime ?? user.activetime ?? "—",
+            proc_score: summary.productivityScore ?? 0,
+            foc_score: summary.focusScore ?? 0,
+            activetime: summary.totalWorkMinutes != null ? `${summary.totalWorkMinutes}m` : "—",
             trend: user.trend ?? "—",
-          })),
+          });}),
         );
       })
       .catch(() => setEmployees([]));

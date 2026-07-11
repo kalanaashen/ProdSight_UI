@@ -3,7 +3,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const categories = [
+const defaultCategories = [
   { label: "Development Tools", value: 45, color: "#3b82f6" },
   { label: "Communication", value: 25, color: "#8b5cf6" },
   { label: "Browsers", value: 15, color: "#f59e0b" },
@@ -11,7 +11,7 @@ const categories = [
   { label: "Utilities", value: 5, color: "#10b981" },
 ];
 
-export const AppCategoryChart = () => {
+export const AppCategoryChart = ({ categories = defaultCategories }) => {
   const data = {
     labels: categories.map((category) => category.label),
     datasets: [

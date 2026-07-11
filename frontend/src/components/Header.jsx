@@ -1,19 +1,32 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEmployee } from "../context/EmployeeContext";
+import { getEmployeeByName } from "../api/employeeApi";
+import { getApiErrorMessage } from "../api/apiHelpers";
 
 export const Header = () => {
   const { selectedEmployee, setSelectedEmployee } = useEmployee();
   const [searchValue, setSearchValue] = useState(selectedEmployee);
+  const [searchError, setSearchError] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const searchEmployee = (event) => {
+  const searchEmployee = async (event) => {
     event.preventDefault();
     if (!searchValue.trim()) return;
 
-    setSelectedEmployee(searchValue);
-    if (location.pathname === "/employee") navigate("/activity");
+    setIsSearching(true);
+    setSearchError("");
+    try {
+      const employee = await getEmployeeByName(searchValue.trim());
+      setSelectedEmployee(employee.name, employee._id);
+      if (location.pathname === "/employee") navigate("/activity");
+    } catch (error) {
+      setSearchError(getApiErrorMessage(error, "Employee not found."));
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -28,12 +41,13 @@ export const Header = () => {
             onChange={(event) => setSearchValue(event.target.value)}
             aria-label="Employee username"
           />
-          <button type="submit" className="bg-slate-700 text-white font-bold hover:bg-slate-600 hover:scale-105 rounded-2xl py-1 px-5">
-            Search
+          <button disabled={isSearching} type="submit" className="disabled:opacity-50 bg-slate-700 text-white font-bold hover:bg-slate-600 hover:scale-105 rounded-2xl py-1 px-5">
+            {isSearching ? "Searching…" : "Search"}
           </button>
           {selectedEmployee && (
             <span className="text-sm text-slate-300">Viewing: {selectedEmployee}</span>
           )}
+          {searchError && <span className="text-sm text-red-300">{searchError}</span>}
         </form>
         <div className="flex flex-row gap-1.5">
           <div>

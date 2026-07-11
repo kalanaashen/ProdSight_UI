@@ -3,12 +3,15 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip } fro
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
-export const WeeklyTrendsChart = () => {
+export const WeeklyTrendsChart = ({ summaries = [] }) => {
+  const points = summaries.length ? [...summaries].reverse() : [];
   const data = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: points.length
+      ? points.map((item) => new Date(item.summaryDate).toLocaleDateString(undefined, { weekday: "short" }))
+      : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
-        data: [145, 132, 160, 128, 142, 65, 48],
+        data: points.length ? points.map((item) => item.productivityScore ?? 0) : [145, 132, 160, 128, 142, 65, 48],
         backgroundColor: "#6366f1", // Purple-Indigo color
         borderRadius: 12, // ✅ Makes the tops of the bars rounded
         borderSkipped: false,

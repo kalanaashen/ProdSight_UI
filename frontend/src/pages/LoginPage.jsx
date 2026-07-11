@@ -4,7 +4,7 @@ import { loginuser } from "../api/loginUserApi";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    email: "",
     password: "",
   });
   const [error, setError] = useState("");
@@ -18,12 +18,12 @@ const LoginPage = () => {
   const login = async () => {
     setError("");
 
-    if (!formData.name && !formData.password) {
+    if (!formData.email && !formData.password) {
       setError("Fill are required fields.");
       return;
     }
-    if (formData.name.length < 1) {
-      setError("Username field is required.");
+    if (formData.email.length < 1) {
+      setError("Email field is required.");
       return;
     }
     if (formData.password.length < 1) {
@@ -33,7 +33,7 @@ const LoginPage = () => {
     try {
       const result = await loginuser(formData);
       const data = result?.data ?? result;
-      const accessToken = data?.accessToken ?? data?.token;
+      const accessToken = typeof data === "string" ? data : (data?.accessToken ?? data?.token);
       const refreshToken = data?.refreshToken;
 
       if (accessToken) localStorage.setItem("accessToken", accessToken);
@@ -84,14 +84,14 @@ const LoginPage = () => {
               )}
               <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-gray-400 ">
-                  Username
+                  Email
                 </label>
                 <input
                   type="text"
                   className="p-1.5 rounded-lg border border-gray-300 text-white bg-white/20 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
-                  placeholder="Joe"
-                  name="name"
-                  value={formData.name}
+                  placeholder="joe@example.com"
+                  name="email"
+                  value={formData.email}
                   onChange={(e) => onChangeLogin(e)}
                 />
               </div>
