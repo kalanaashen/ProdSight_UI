@@ -4,7 +4,9 @@ import { BrowserAnalyticsChart } from "../components/BrowserAnaylticsChart";
 import { WeeklyTrendsChart } from "../components/WeeklyTrendChart";
 import { HourlyActivityChart } from "../components/HourlyActivityChart";
 import { WebSiteTable } from "../components/WebSitePage/WebSiteTable";
+import { useEmployee } from "../context/EmployeeContext";
 export const WebUsagePage = () => {
+  const { selectedEmployee } = useEmployee();
   const carddata = [
     {
       id: 1,
@@ -38,7 +40,9 @@ export const WebUsagePage = () => {
           Website Usage Analytics
         </h1>
         <h1 className="font-semibold text-sm text-gray-400">
-          Track and analyze browsing patterns and website visits
+          {selectedEmployee
+            ? `Browsing patterns and website visits for ${selectedEmployee}`
+            : "Search for an employee above to view website usage"}
         </h1>
       </div>
 

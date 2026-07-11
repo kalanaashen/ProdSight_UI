@@ -1,10 +1,11 @@
-import React from "react";
 import { AppCategoryChart } from "../components/AppUsage/AppCategoryChart";
 import { ScreenCard } from "../components/AppUsage/ScreenCard";
 import { TopApplicationsChart } from "../components/AppUsage/TopApplicationsChart";
 import { AppTable } from "../components/AppUsage/AppTable";
+import { useEmployee } from "../context/EmployeeContext";
 
 export const AppUsagePage = () => {
+  const { selectedEmployee } = useEmployee();
   const carddata = [
     {
       id: 1,
@@ -36,7 +37,9 @@ export const AppUsagePage = () => {
           Application Usage Analytics
         </h1>
         <h1 className="text-sm font-semibold text-gray-400">
-          Monitor and analyze application usage patterns
+          {selectedEmployee
+            ? `Application usage patterns for ${selectedEmployee}`
+            : "Search for an employee above to view application usage"}
         </h1>
       </div>
 

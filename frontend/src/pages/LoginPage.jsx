@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { loginuser } from "../api/loginUserApi";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     password: "",
@@ -31,10 +31,17 @@ const LoginPage = () => {
       return;
     }
     try {
-      await loginuser(formData);
-      console.log("Login Successful.");
+      const result = await loginuser(formData);
+      const data = result?.data ?? result;
+      const accessToken = data?.accessToken ?? data?.token;
+      const refreshToken = data?.refreshToken;
+
+      if (accessToken) localStorage.setItem("accessToken", accessToken);
+      if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+      navigate("/activity");
     } catch (error) {
-      console.log(error.response.data);
+      const message = error.response?.data?.message ?? error.response?.data;
+      setError(typeof message === "string" ? message : "Login failed. Please try again.");
     }
   };
   return (

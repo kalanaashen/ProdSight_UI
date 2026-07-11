@@ -1,9 +1,35 @@
-import React from "react";
-import { id } from "zod/locales";
+import { useEffect, useState } from "react";
 import { ActiveCard } from "../components/EmployeeComponents/ActiveCard";
 import { EmployeeCard } from "../components/EmployeeComponents/EmployeeCard";
 import { EmployeeTable } from "../components/EmployeeComponents/EmployeeTable";
+import { getEmployees } from "../api/employeeApi";
 export const EmployeePage = () => {
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+
+    getEmployees()
+      .then((users) => {
+        if (!active) return;
+        setEmployees(
+          users.map((user) => ({
+            name: user.name ?? user.username ?? user.fullName,
+            role: user.role ?? user.jobTitle ?? "Employee",
+            status: user.status ?? "Offline",
+            proc_score: user.productivityScore ?? user.proc_score ?? 0,
+            foc_score: user.focusScore ?? user.foc_score ?? 0,
+            activetime: user.activeTime ?? user.activetime ?? "—",
+            trend: user.trend ?? "—",
+          })),
+        );
+      })
+      .catch(() => setEmployees([]));
+
+    return () => {
+      active = false;
+    };
+  }, []);
   const data = [
     {
       id: 1,
@@ -52,26 +78,21 @@ export const EmployeePage = () => {
       </div>
 
       <div className="grid md:grid-cols-3 grid-cols-1 gap-8 p-8">
-        <EmployeeCard
-          name="John Doe"
-          role="Software Engineer"
-          pro_score={80}
-          foc_score={70}
-          activetime="6h 30m"
-          idletime="1h 15m"
-        />
+        {employees.map((employee) => (
+          <EmployeeCard
+            key={employee.name}
+            name={employee.name}
+            role={employee.role}
+            pro_score={employee.proc_score}
+            foc_score={employee.foc_score}
+            activetime={employee.activetime}
+            idletime={employee.idletime ?? "—"}
+          />
+        ))}
       </div>
 
       <div>
-        <EmployeeTable
-          name={"John Doe"}
-          role="Software Engineer"
-          status="Active"
-          proc_score={"23"}
-          foc_score={"67"}
-          activetime={"6h 30m"}
-          trend="Increasing"
-        />
+        <EmployeeTable employees={employees} />
       </div>
     </div>
   );

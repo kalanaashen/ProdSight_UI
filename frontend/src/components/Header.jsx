@@ -1,19 +1,40 @@
-import React from "react";
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEmployee } from "../context/EmployeeContext";
 
 export const Header = () => {
+  const { selectedEmployee, setSelectedEmployee } = useEmployee();
+  const [searchValue, setSearchValue] = useState(selectedEmployee);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const searchEmployee = (event) => {
+    event.preventDefault();
+    if (!searchValue.trim()) return;
+
+    setSelectedEmployee(searchValue);
+    if (location.pathname === "/employee") navigate("/activity");
+  };
+
   return (
     <div className="bg-slate-800 w-full p-4">
       <div  className="flex flex-row justify-between">
-        <div className="flex flex-row justify-baseline gap-5">
+        <form className="flex flex-row items-center gap-3" onSubmit={searchEmployee}>
           <input
             type="text"
-            placeholder="Search Employee"
+            placeholder="Search employee by username"
             className=" border border-slate-400 outline-none hover:ring hover:ring-blue-400 rounded-2xl text-white py-1 px-4"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+            aria-label="Employee username"
           />
-          <button className="bg-slate-700 text-white font-bold hover:bg-slate-600 hover:scale-105 rounded-2xl py-1 px-5">
+          <button type="submit" className="bg-slate-700 text-white font-bold hover:bg-slate-600 hover:scale-105 rounded-2xl py-1 px-5">
             Search
           </button>
-        </div>
+          {selectedEmployee && (
+            <span className="text-sm text-slate-300">Viewing: {selectedEmployee}</span>
+          )}
+        </form>
         <div className="flex flex-row gap-1.5">
           <div>
             <h1 className=" flex items-center justify-center font-bold text-white bg-blue-500 rounded-full h-10 w-10 ">
