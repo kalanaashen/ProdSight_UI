@@ -38,7 +38,7 @@ export const ActiveTimeLine = ({ activities }) => {
   };
   return (
     <div>
-      <div className="border bg-black/40 border-slate-700 rounded-2xl w-full h-screen">
+      <div className="w-full overflow-hidden rounded-2xl border border-slate-700 bg-black/40">
         <div className="flex flex-row justify-between p-4">
           <h1 className="text-md text-white ml-1.5">Activity Timeline</h1>
           <h1 className="text-gray-400 font-medium">
@@ -46,7 +46,10 @@ export const ActiveTimeLine = ({ activities }) => {
           </h1>
         </div>
 
-        <div>
+        <div className="max-h-[620px] overflow-y-auto p-2">
+          {displayedActivities.length === 0 && (
+            <p className="p-10 text-center text-sm text-slate-400">No activity records for today.</p>
+          )}
           {displayedActivities.map((data) => (
             <ActiveTime
               key={data.id ?? `${data.recordedAt}-${data.activeWindow}`}

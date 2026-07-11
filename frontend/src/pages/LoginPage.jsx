@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { loginuser } from "../api/loginUserApi";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    email: "",
     password: "",
   });
   const [error, setError] = useState("");
@@ -18,12 +18,12 @@ const LoginPage = () => {
   const login = async () => {
     setError("");
 
-    if (!formData.name && !formData.password) {
+    if (!formData.email && !formData.password) {
       setError("Fill are required fields.");
       return;
     }
-    if (formData.name.length < 1) {
-      setError("Username field is required.");
+    if (formData.email.length < 1) {
+      setError("Email field is required.");
       return;
     }
     if (formData.password.length < 1) {
@@ -31,10 +31,17 @@ const LoginPage = () => {
       return;
     }
     try {
-      await loginuser(formData);
-      console.log("Login Successful.");
+      const result = await loginuser(formData);
+      const data = result?.data ?? result;
+      const accessToken = typeof data === "string" ? data : (data?.accessToken ?? data?.token);
+      const refreshToken = data?.refreshToken;
+
+      if (accessToken) localStorage.setItem("accessToken", accessToken);
+      if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+      navigate("/activity");
     } catch (error) {
-      console.log(error.response.data);
+      const message = error.response?.data?.message ?? error.response?.data;
+      setError(typeof message === "string" ? message : "Login failed. Please try again.");
     }
   };
   return (
@@ -77,14 +84,14 @@ const LoginPage = () => {
               )}
               <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-gray-400 ">
-                  Username
+                  Email
                 </label>
                 <input
                   type="text"
                   className="p-1.5 rounded-lg border border-gray-300 text-white bg-white/20 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
-                  placeholder="Joe"
-                  name="name"
-                  value={formData.name}
+                  placeholder="joe@example.com"
+                  name="email"
+                  value={formData.email}
                   onChange={(e) => onChangeLogin(e)}
                 />
               </div>

@@ -1,14 +1,9 @@
 import axiosInstance from "./axiosInstance";
 
-export const loginuser = (payload) => {
-  try {
-    const res = axiosInstance.post("auth/", payload);
-    return res.data;
-  } catch (error) {
-    throw new error;
-  }
+export const loginuser = async (payload) => {
+  const res = await axiosInstance.post("auth/", payload);
+  return res.data;
 };
-
 
 
 

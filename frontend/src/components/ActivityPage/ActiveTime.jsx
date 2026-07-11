@@ -1,5 +1,5 @@
-import React from "react";
 import { Keyboard, Mouse } from "lucide-react";
+import { formatSeconds } from "../../utils/timeFormat";
 export const ActiveTime = ({
   app,
   time,
@@ -15,7 +15,7 @@ export const ActiveTime = ({
         <div className="flex flex-row gap-15">
           <div className="flex flex-col pl-4.5">
             <h1 className="text-gray-300 font-medium ">{time}</h1>
-            <h1 className="text-gray-300 font-light">{duration / 60}m</h1>
+            <h1 className="text-gray-300 font-light">{formatSeconds(duration)}</h1>
           </div>
           <div className="flex flex-col flex-1">
             <div className="flex flex-row items-baseline gap-x-2 w-full">

@@ -1,18 +1,15 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ActivityCard } from "../components/ActivityPage/ActivityCard";
-import { Monitor, Clock, Keyboard, Mouse, UserRoundSearch } from "lucide-react";
-import { CurrentSession } from "../components/ActivityPage/CurrentSession";
+import { Monitor, Clock, Keyboard, Mouse } from "lucide-react";
 import { InputActivity } from "../components/ActivityPage/InputActivity";
 import { ActiveWindow } from "../components/ActivityPage/ActiveWindow";
 import { ActiveTimeLine } from "../components/ActivityPage/ActiveTimeLine";
 import getTodayActivity from "../api/activityApi";
-import { set } from "zod";
-import { EmployeePage } from "./EmployeePage";
-
-const testActivityDate = "2026-05-23T20:29:29.687Z";
+import { useEmployee } from "../context/EmployeeContext";
+import { formatSeconds } from "../utils/timeFormat";
 
 export const ActivityPage = () => {
-  const [username, setUsername] = useState("Kalana Ashen");
+  const { selectedEmployee } = useEmployee();
   const [searchedActivities, setSearchedActivities] = useState([]);
   const [searchError, setSearchError] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -32,7 +29,7 @@ export const ActivityPage = () => {
     {
       id: 2,
       name: "Session Duration",
-      data: totalDuration,
+      data: formatSeconds(totalDuration),
       icon: <Clock className="text-green-700" />,
     },
     {
@@ -48,9 +45,10 @@ export const ActivityPage = () => {
       icon: <Mouse className="text-yellow-700" />,
     },
   ];
-  const finddetails = async () => {
-    if (!username.trim()) {
-      setSearchError("Enter a username before searching.");
+  const finddetails = useCallback(async () => {
+    if (!selectedEmployee) {
+      setSearchError("Search for an employee in the top bar to view activity details.");
+      setSearchedActivities([]);
       return;
     }
 
@@ -58,15 +56,16 @@ export const ActivityPage = () => {
     setSearchError("");
 
     try {
-      const res = await getTodayActivity(username.trim(), testActivityDate);
+      const today = new Date().toISOString().split("T")[0];
+      const res = await getTodayActivity(selectedEmployee, today);
       const totals = res?.data ?? res;
-      const recordsArray = res?.records ?? [];
+      const recordsArray = totals?.records ?? [];
       setSearchedActivities(recordsArray);
       setTotalDuration(totals?.totalDuration ?? 0);
       setTotalKeystrokes(totals?.totalKeyStrokes ?? 0);
       setTotalMouseClicks(totals?.totalMouseClicks ?? 0);
-      setActiveWindow(totals?.records?.[0]?.activeWindow ?? "No App");
-      setIdleSeconds(totals?.idleSeconds ?? 0);
+      setActiveWindow(recordsArray[0]?.activeWindow ?? "No App");
+      setIdleSeconds(totals?.totalIdleSeconds ?? 0);
     } catch (error) {
       const responseMessage = error.response?.data;
 
@@ -78,7 +77,12 @@ export const ActivityPage = () => {
     } finally {
       setIsSearching(false);
     }
-  };
+  }, [selectedEmployee]);
+
+  useEffect(() => {
+    const request = window.setTimeout(finddetails, 0);
+    return () => window.clearTimeout(request);
+  }, [finddetails]);
 
   return (
     <div>
@@ -92,37 +96,14 @@ export const ActivityPage = () => {
               Real-time employee activity tracking and session logs
             </h1>
           </div>
-          <div className="flex flex-row items-baseline gap-4">
-            <input
-              type="text"
-              className="border border-gray-300 py-2 px-1  rounded-xl text-white outline-none "
-              placeholder="Username "
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  finddetails();
-                }
-              }}
-            />
-            <button
-              type="button"
-              aria-label="Search activity details"
-              className="disabled:opacity-50"
-              disabled={isSearching}
-              onClick={finddetails}
-            >
-              <UserRoundSearch
-                className="text-green-300 hover:text-green-500 hover:scale-105 duration-150"
-                size={40}
-              />
-            </button>
-          </div>
+          <p className="self-center text-sm text-slate-300">
+            {isSearching ? "Loading…" : selectedEmployee ? `Employee: ${selectedEmployee}` : "No employee selected"}
+          </p>
         </div>
         {searchError && <p className="px-7 text-red-300">{searchError}</p>}
         {searchedActivities && !searchError && (
           <p className="px-7 text-gray-300">
-            Found {searchedActivities.length} activity record(s) for {username}.
+            Found {searchedActivities.length} activity record(s) for {selectedEmployee}.
           </p>
         )}
 

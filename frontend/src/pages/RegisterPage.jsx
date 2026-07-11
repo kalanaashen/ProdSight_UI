@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router";
 import { useState } from "react";
 import { RegisterUser } from "../api/RegisterUserApi";
@@ -11,6 +10,7 @@ export const RegisterPage = () => {
     name: "",
     email: "",
     password: "",
+    role: "Software Engineer",
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,13 +20,14 @@ export const RegisterPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const registerUser = async (e) => {
+  const registerUser = async () => {
     setError("");
 
     if (
       !formData.name ||
       !formData.email ||
       !formData.password ||
+      !formData.role ||
       !confirmPassword
     ) {
       setError("All fields are required.");
@@ -51,7 +52,7 @@ export const RegisterPage = () => {
       return;
     }
     try {
-      const result = await RegisterUser(formData);
+      await RegisterUser(formData);
       navigate("/login");
     } catch (error) {
       console.error(error.response?.data || error.message);
@@ -61,7 +62,7 @@ export const RegisterPage = () => {
 
   return (
     <div>
-      <div className=" flex flex-col justify-center items-center bg-linear-to-r from-slate-950 to-sky-800 h-screen ">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-linear-to-r from-slate-950 to-sky-800 py-8">
         <div className="mb-8 flex items-center gap-4">
           <img
             src="/prodsight_logo.png"
@@ -84,7 +85,7 @@ export const RegisterPage = () => {
               {error}
             </div>
           )}
-          <div className=" flex flex-col p-3 gap-y-8 ">
+          <div className="flex flex-col gap-y-5 p-3">
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-gray-400 ">
                 Full Name
@@ -100,6 +101,27 @@ export const RegisterPage = () => {
                 className="border text-white font-medium  bg-gray-700 border-gray-400 py-2 outline-none rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition"
               />
             </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="role" className="text-gray-400">
+                Job Role
+              </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={onchange}
+                className="border border-gray-400 rounded-lg bg-gray-700 py-2 text-white outline-none transition focus:border-blue-500 focus:ring-1 focus:ring-blue-200"
+              >
+                <option>Software Engineer</option>
+                <option>Designer</option>
+                <option>Project Manager</option>
+                <option>QA Engineer</option>
+                <option>Human Resources</option>
+                <option>Employee</option>
+                <option>Other</option>
+              </select>
+            </div>
+
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-gray-400">
                 Email
